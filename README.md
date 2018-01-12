@@ -1,3 +1,3 @@
 # maze
 
-three.js 做的迷宮
+three.js 做的恶趣味迷宮
