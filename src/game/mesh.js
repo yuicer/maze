@@ -14,7 +14,7 @@ var mesh = {
         map: loader.load(img),
         side: THREE.DoubleSide
       }),
-      0.4, // low friction
+      0.5, // low friction
       0.8 // high restitution
     )
     wall_material.map.wrapS = wall_material.map.wrapT = THREE.RepeatWrapping
@@ -24,7 +24,7 @@ var mesh = {
     var box_material = this.meshMaterial('wood.jpg')
     box_material.map.repeat.set(0.25, 0.25)
 
-    var geo = new THREE.BoxGeometry(4, 10, 4)
+    var geo = new THREE.BoxGeometry(2, 11, 2)
     var box = new Physijs.ConvexMesh(
       geo,
       box_material
@@ -33,7 +33,7 @@ var mesh = {
     box.position.x = 0
     box.castShadow = true
     box.receiveShadow = true
-    box.position.set(375, 5, 800 - 20)
+    box.position.set(375, 6, 800 - 20)
     meshArray.push(box)
   },
   wall(type, length) {
@@ -70,9 +70,9 @@ var mesh = {
       mesh.rotation.set(rx, ry, rz)
       //  mesh.scale.set(s, s, s)
       //  mesh.scale.set(.2, .2, .2)
-      mesh.position.y = 20
+      // mesh.position.y = 20
       mesh.castShadow = true
-      mesh.position.set(375, 4, 120 + 5)
+      mesh.position.set(375, 20, 120 + 5)
       meshArray.push(mesh)
     }
 

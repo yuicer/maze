@@ -1,10 +1,7 @@
 import light from './light.js'
 import mesh from './mesh.js'
-// import move from './move.js'
 
 var scene, camera, renderer
-init()
-animate()
 
 function init() {
   scene = new Physijs.Scene()
@@ -32,8 +29,6 @@ function animate() {
   renderer.render(scene, camera)
 }
 
-import text from './text.js'
-
 var move = {
   yuusya: {},
   dom: {},
@@ -49,10 +44,10 @@ var move = {
   jump: false,
   jump_height: 0,
   jump_enable: true,
-  //rotate
+  // rotate
   angelX: 0,
   angelY: 0,
-  //		上一步的鼠标位置
+  // 上一步的鼠标位置
   mouse_vector: new THREE.Vector3(0, 0, 0),
   rotate_speed: 0.005,
 
@@ -106,20 +101,19 @@ var move = {
     }
 
     //转动,鼠标移到边缘后一直转动
-    if (me.mouse_vector.x > 0.9) {
+    if (me.mouse_vector.x > 0.9)
       me.yuusya.rotateOnAxis(new THREE.Vector3(0, -1, 0), me.rotate_speed * 6)
-    } else if (me.mouse_vector.x < -0.9) {
+    else if (me.mouse_vector.x < -0.9)
       me.yuusya.rotateOnAxis(new THREE.Vector3(0, 1, 0), me.rotate_speed * 6)
-    }
+
     if (me.mouse_vector.y > 0.9 && camera.rotation.x < Math.PI / 4)
       camera.rotateOnAxis(new THREE.Vector3(1, 0, 0), me.rotate_speed * 6)
     else if (me.mouse_vector.y < -0.9 && camera.rotation.x > -Math.PI / 6)
       camera.rotateOnAxis(new THREE.Vector3(-1, 0, 0), me.rotate_speed * 6)
 
-
     //跳
     if (me.jump) {
-      me.jump_height += .1
+      me.jump_height += 0.1
       if (me.jump_height < 3) {
         me.yuusya.position.y += 0.15
         //me.jump_height 只是一个计数器
@@ -130,111 +124,19 @@ var move = {
       }
     }
 
-    // //判断位置出现文本
-    // //探索
-    // if (!vs.kaiwa_show && me.yuusya.position.z > 700 && me.yuusya.position.z < 750 && me.yuusya.position.x < 400 && me.yuusya.position.x > 350 && vs.death == 0 && !vs.win)
-    //   if (text[0]['a1'][text[0]['a1'].length - 1] != '') {
-    //     vs.kaiwa(0, 'a1', 100)
-    //   }
+    //判断位置出现文本
+    //探索
+    if (!vm.start && me.yuusya.position.z > 700 && me.yuusya.position.z < 750 && me.yuusya.position.x < 400 && me.yuusya.position.x > 350)
+      vm.kaiwa('start')
 
-    // //
-    // if (!vs.kaiwa_show && me.yuusya.position.z > 550 && me.yuusya.position.z < 600 && me.yuusya.position.x < 400 && me.yuusya.position.x > 350 && vs.death == 0 && !vs.win)
-    //   if (text[0]['a2'][text[0]['a2'].length - 1] != '')
-    //     vs.kaiwa(0, 'a2', 100)
+    // 迷宫通关，到达史莱姆
+    if (!vm.final && me.yuusya.position.z < 250 && me.yuusya.position.x < 400 && me.yuusya.position.x > 350)
+      vm.kaiwa('final')
 
-
-    // //迷宫通关，到达史莱姆
-    // if (!vs.kaiwa_show && me.yuusya.position.z < 250 && me.yuusya.position.x < 400 && me.yuusya.position.x > 350 && !vs.win) {
-    //   switch (vs.death) {
-    //     case 0:
-    //       if (text[1]['a1'][text[1]['a1'].length - 1] != '')
-    //         vs.kaiwa(1, 'a1', 300)
-    //       break
-    //     case 1:
-    //       if (text[1]['a2'][text[1]['a2'].length - 1] != '')
-    //         vs.kaiwa(1, 'a2', 300)
-    //       break
-    //     case 2:
-    //     case 3:
-    //     case 4:
-    //       if (text[1]['a3'][text[1]['a3'].length - 1] != '')
-    //         vs.kaiwa(1, 'a3', 300)
-    //       break
-    //     case 5:
-    //       if (text[1]['a4'][text[1]['a4'].length - 1] != '')
-    //         vs.kaiwa(1, 'a4', 100)
-    //       else if (text[1]['a5'][text[1]['a5'].length - 1] != '')
-    //         vs.kaiwa(1, 'a5', 300)
-    //       break
-
-    //   }
-    // }
-
-    // //死了回到原点
-    // if (!vs.kaiwa_show && me.yuusya.position.z > 700 && me.yuusya.position.z < 750 && me.yuusya.position.x < 400 && me.yuusya.position.x > 350 && !vs.win) {
-    //   switch (vs.death) {
-    //     case 1:
-    //       if (text[2]['a1'][text[2]['a1'].length - 1] != '')
-    //         vs.kaiwa(2, 'a1', 100)
-    //       break
-    //     case 2:
-    //       if (text[2]['a2'][text[2]['a2'].length - 1] != '')
-    //         vs.kaiwa(2, 'a2', 100)
-    //       break
-    //     case 3:
-    //     case 4:
-    //       if (text[2]['a3'][text[2]['a3'].length - 1] != '')
-    //         vs.kaiwa(2, 'a3', 100)
-    //       break
-    //     case 5:
-    //       if (text[2]['a4'][text[2]['a4'].length - 1] != '')
-    //         vs.kaiwa(2, 'a4', 100)
-    //       break
-    //   }
-    // }
-
-
-    // //过了很长时间没过迷宫
-    // //2分钟
-    // if (!vs.kaiwa_show && vs.death < 1 && !vs.win) {
-    //   if (me.clock.getElapsedTime() > 300)
-    //     if (text[3]['a1'][text[3]['a1'].length - 1] != '')
-    //       vs.kaiwa(3, 'a1', 100)
-    //   else if (text[3]['a1'][text[3]['a1'].length - 1] == '') {
-    //     vs.lost = true
-    //     vm.$router.push('/')
-    //   } else if (me.clock.getElapsedTime() > 180)
-    //     if (text[3]['a2'][text[3]['a2'].length - 1] != '')
-    //       vs.kaiwa(3, 'a2', 100)
-    //   else if (me.clock.getElapsedTime() > 120)
-    //     if (text[3]['a3'][text[3]['a3'].length - 1] != '')
-    //       vs.kaiwa(3, 'a3', 100)
-
-    // }
-
-    // if (vs.win && !vs.kaiwa_show) {
-    //   if (text[4]['a1'][text[4]['a1'].length - 1] != '')
-    //     vs.kaiwa(4, 'a1', 300)
-    //   else if (text[4]['a2'][text[4]['a2'].length - 1] != '')
-    //     vs.kaiwa(4, 'a2', 100)
-    //   else if (text[4]['a3'][text[4]['a3'].length - 1] != '')
-    //     vs.kaiwa(4, 'a3', 300)
-    //   else if (text[4]['a4'][text[4]['a4'].length - 1] != '')
-    //     vs.kaiwa(4, 'a4', 100)
-    //   else if (text[4]['a5'][text[4]['a5'].length - 1] != '')
-    //     vs.kaiwa(4, 'a5', 200)
-    //   else
-    //     vm.$router.push('/')
-    // }
-    // if (vs.mercy == 2 && !vs.kaiwa_show) {
-    //   if (text[5]['a1'][text[5]['a1'].length - 1] != '')
-    //     vs.kaiwa(5, 'a1', 280)
-    //   else if (text[5]['a2'][text[5]['a2'].length - 1] != '') {
-    //     vs.kaiwa(5, 'a2', 200)
-    //     vm.$router.push('/')
-    //   }
-    // }
-
+    // 过了很长时间没过迷宫
+    // 2分钟
+    if (!vm.timeout && me.clock.getElapsedTime() > 160)
+      vm.kaiwa('timeout')
   },
   //绑定事件
   keyboard: function () {
@@ -281,7 +183,6 @@ var move = {
       }
       if (!me.left && !me.forward && !me.right && !me.back)
         me.move = false
-
     }
     me.dom.addEventListener('keyup', me.event[1])
   },
@@ -306,5 +207,12 @@ var move = {
     })
   }
 }
+var vm
+var game = function (vm_) {
+  init()
+  animate()
+  vm = vm_
+  move.init()
+}
 
-move.init()
+export default game
